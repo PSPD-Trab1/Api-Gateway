@@ -1,7 +1,6 @@
 import axios from "axios"
 import type { Review } from "@/types/review"
 
-// Base URL para o API Gateway HTTP
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
 export interface CreateReviewDto {
@@ -11,29 +10,25 @@ export interface CreateReviewDto {
 }
 
 export const ReviewService = {
-  async getReviews(): Promise<Review[]> {
-    try {
-      const response = await axios.get(`${API_URL}/reviews`)
-      return response.data
-    } catch (error) {
-      console.error("Error fetching reviews:", error)
-      throw error
-    }
-  },
-
   async getReviewsByBook(bookId: string): Promise<Review[]> {
     try {
-      const response = await axios.get(`${API_URL}/reviews?bookId=${bookId}`)
-      return response.data
+      const response = await axios.get(`${API_URL}/books/${bookId}/reviews`)
+      return response.data.reviews // conforme retorno do FastAPI
     } catch (error) {
       console.error(`Error fetching reviews for book ${bookId}:`, error)
       throw error
     }
   },
 
-  async createReview(review: CreateReviewDto): Promise<Review> {
+  async createReview(review: CreateReviewDto): Promise<{ message: string }> {
     try {
-      const response = await axios.post(`${API_URL}/reviews`, review)
+      const response = await axios.post(
+        `${API_URL}/books/${review.bookId}/reviews`,
+        {
+          rating: review.rating,
+          comment: review.comment || "",
+        }
+      )
       return response.data
     } catch (error) {
       console.error("Error creating review:", error)
