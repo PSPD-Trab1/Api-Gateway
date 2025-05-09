@@ -1,7 +1,7 @@
 import axios from "axios"
 import type { Book } from "@/types/book"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:50053"
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://192.168.15.10:50053"
 
 export interface CreateBookDto {
   title: string
