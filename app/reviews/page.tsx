@@ -64,7 +64,6 @@ export default function ReviewsPage() {
       const data = await BookService.getBooks();
       setBooks(data);
 
-      // Se não houver livro selecionado e existirem livros, seleciona o primeiro
       if (!selectedBookId && data.length > 0) {
         setSelectedBookId(data[0].id);
         fetchReviewsByBook(data[0].id);
@@ -186,7 +185,7 @@ export default function ReviewsPage() {
                         <FormLabel>Livro*</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger className="bg-white text-black border border-gray-300 hover:bg-gray-100">

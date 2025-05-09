@@ -30,5 +30,4 @@ export const BookService = {
       throw error
     }
   },
-
 }
